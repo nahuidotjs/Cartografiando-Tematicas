@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartografiando Temáticas · Ediciones y ganadores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --white: #ffffff;
+    --off: #f7f7f5;
+    --paper: #f2f0eb;
+    --ink: #1a1a18;
+    --ink2: #4a4a46;
+    --ink3: #8a8a84;
+    --rule: #e0ded8;
+    --accent: #1a5cff;
+    --accent-light: #e8eeff;
+    --accent2: #0d9373;
+    --accent2-light: #e6f4f0;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+    --r: 8px;
+  }
+
+  body {
+    background: var(--off);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    height: 52px;
+    gap: 32px;
+  }
+  .nav-brand {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-brand span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 0;
+    margin-left: auto;
+  }
+  .nav-link {
+    padding: 0 14px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink2);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    padding: 40px 40px 32px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .hero p {
+    font-size: 14px;
+    color: var(--ink3);
+    max-width: 560px;
+    font-weight: 300;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+
+  /* SECTION HEADER */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .section-count {
+    font-size: 12px;
+    color: var(--ink3);
+    font-weight: 300;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+
+  /* TARJETA DE EDICIÓN */
+  .edition-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .edition-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  }
+  .edition-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: var(--paper);
+    display: block;
+  }
+  .edition-info {
+    padding: 16px;
+  }
+  .edition-year {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .edition-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .edition-desc {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .edition-tag {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* TARJETA DE GANADOR */
+  .winner-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    padding: 16px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .winner-card:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+  .winner-category {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent2);
+  }
+  .winner-project {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .winner-author {
+    font-size: 12px;
+    color: var(--ink2);
+    border-left: 2px solid var(--accent);
+    padding-left: 8px;
+    margin: 4px 0;
+  }
+  .winner-year {
+    font-size: 11px;
+    color: var(--ink3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .badge {
+    background: var(--ink);
+    color: white;
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 10px;
+    width: fit-content;
+  }
+
+  /* INSTRUCCIONES GOOGLE DRIVE */
+  .drive-note {
+    background: var(--accent-light);
+    border-radius: var(--r);
+    padding: 20px;
+    margin-bottom: 48px;
+    border-left: 4px solid var(--accent);
+  }
+  .drive-note h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .drive-note code {
+    background: var(--white);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--accent);
+    word-break: break-all;
+  }
+  hr {
+    margin: 32px 0;
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--ink3);
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; }
+    .hero { padding: 30px 20px; }
+    main { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#"><span>CT</span> Cartografiando Temáticas</a>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Ediciones</a>
+    <a class="nav-link" href="#ganadores">Ganadores</a>
+    <a class="nav-link" href="#como-agregar">+ Google Drive</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Ediciones y ganadores</h1>
+  <p>Conoce los proyectos ganadores del concurso de cartografía social organizado por el Departamento Teoría y Análisis · UAM Xochimilco.</p>
+</div>
+
+<main>
+  <!-- EDICIONES ANTERIORES -->
+  <section id="ediciones">
+    <div class="section-head">
+      <h2>📅 Ediciones anteriores</h2>
+      <span class="section-count" id="count-editions"></span>
+    </div>
+    <div class="cards-grid" id="editions-grid"></div>
+  </section>
+
+  <!-- GANADORES -->
+  <section id="ganadores">
+    <div class="section-head">
+      <h2>🏆 Ganadores por edición</h2>
+      <span class="section-count" id="count-winners"></span>
+    </div>
+    <div class="cards-grid" id="winners-grid"></div>
+  </section>
+
+  <!-- INSTRUCCIONES PARA IMÁGENES DESDE GOOGLE DRIVE -->
+  <div id="como-agregar" class="drive-note">
+    <h3>📸 Cómo usar imágenes de Google Drive en este catálogo</h3>
+    <p>Para agregar una imagen alojada en Google Drive, sigue estos pasos:</p>
+    <ol style="margin-left: 20px; margin-top: 8px;">
+      <li>Sube tu imagen a Google Drive.</li>
+      <li>Comparte el archivo con <strong>"Cualquier persona con el enlace"</strong> (modo visor).</li>
+      <li>Copia el ID del archivo de la URL: <code>https://drive.google.com/file/d/<strong>ID_DEL_ARCHIVO</strong>/view</code></li>
+      <li>Usa la siguiente URL directa: <code>https://drive.google.com/uc?export=view&id=ID_DEL_ARCHIVO</code></li>
+      <li>Pega esa URL en el campo <code>imageUrl</code> dentro del array de ediciones o ganadores (ver comentarios en el código JavaScript).</li>
+    </ol>
+    <p><strong>Ejemplo funcional:</strong> <code>https://drive.google.com/uc?export=view&id=1ABC123xyz</code></p>
+    <p>Si prefieres usar imágenes externas, cualquier URL pública (jpg, png) también funciona.</p>
+  </div>
+</main>
+
+<footer>
+  Observatorio Metropolitano · Departamento Teoría y Análisis · UAM Xochimilco
+</footer>
+
+<script>
+  // ========================
+  //  DATOS: EDICIONES
+  // ========================
+  // Para cada edición, puedes añadir una imagen desde Google Drive usando el enlace directo (ver instrucciones arriba)
+  const ediciones = [
+    {
+      year: "2025",
+      title: "Movilidad y territorio",
+      desc: "Cartografías colaborativas sobre accesibilidad y transporte público en la Zona Metropolitana del Valle de México.",
+      imageUrl: "https://drive.google.com/uc?export=view&id=1EJEMPLO_ID", // 👈 REEMPLAZA con tu ID de Google Drive
+      tag: "Ganador: Colectivo Rutas UAM"
+    },
+    {
+      year: "2024",
+      title: "Justicia espacial",
+      desc: "Análisis de desigualdades territoriales y equipamiento urbano mediante sistemas de información geográfica.",
+      imageUrl: "https://drive.google.com/uc?export=view&id=1OTRO_ID", // 👈 REEMPLAZA
+      tag: "Ganador: Laboratorio de Cartografía Social"
+    },
+    {
+      year: "2023",
+      title: "Agua y cuencas",
+      desc: "Mapeo de conflictos hídricos y vulnerabilidad en la cuenca del Lerma.",
+      imageUrl: "https://drive.google.com/uc?export=view&id=1TERCER_ID",
+      tag: "Ganador: Equipo HidroMap"
+    }
+  ];
+
+  // ========================
+  //  DATOS: GANADORES
+  // ========================
+  const winners = [
+    {
+      year: "2025",
+      category: "Primer lugar",
+      project: "Rutas invisibles: accesibilidad en transporte concesionado",
+      author: "Ana Laura Salguero, Rodrigo Zumaya Tapia",
+      description: "Modelo de frecuencias y cobertura territorial a partir de GTFS."
+    },
+    {
+      year: "2025",
+      category: "Mención honorífica",
+      project: "Mapa de calor de paradas inseguras",
+      author: "Brenda Denisse Fernández Guerrero",
+      description: "Densidad de incidentes en el transporte público."
+    },
+    {
+      year: "2024",
+      category: "Primer lugar",
+      project: "Índice de justicia espacial en alcaldías de CDMX",
+      author: "Barrera Cruz Angel Daniel",
+      description: "Indicadores de accesibilidad a equipamientos básicos."
+    },
+    {
+      year: "2024",
+      category: "Segundo lugar",
+      project: "Huella de carbono metropolitana",
+      author: "Colectivo Sustenta",
+      description: "Emisiones por origen-destino en la ZMVT."
+    },
+    {
+      year: "2023",
+      category: "Primer lugar",
+      project: "Cuenca Lerma: conflictos y gobernanza",
+      author: "Laboratorio de Hidrogeografía",
+      description: "Cartografía participativa de puntos de extracción y contaminación."
+    }
+  ];
+
+  // Renderizar ediciones
+  const editionsGrid = document.getElementById('editions-grid');
+  const winnersGrid = document.getElementById('winners-grid');
+
+  function renderEditions() {
+    if (!editionsGrid) return;
+    editionsGrid.innerHTML = '';
+    ediciones.forEach(ed => {
+      const card = document.createElement('div');
+      card.className = 'edition-card';
+      // Imagen con fallback si no carga (por si el ID no es válido)
+      const img = document.createElement('img');
+      img.className = 'edition-img';
+      img.src = ed.imageUrl;
+      img.alt = ed.title;
+      img.onerror = () => { img.src = 'https://placehold.co/400x200?text=Imagen+no+disponible'; };
+      const info = document.createElement('div');
+      info.className = 'edition-info';
+      info.innerHTML = `
+        <div class="edition-year">${ed.year}</div>
+        <div class="edition-title">${ed.title}</div>
+        <div class="edition-desc">${ed.desc}</div>
+        <span class="edition-tag">${ed.tag}</span>
+      `;
+      card.appendChild(img);
+      card.appendChild(info);
+      editionsGrid.appendChild(card);
+    });
+    document.getElementById('count-editions') && (document.getElementById('count-editions').innerText = ediciones.length + ' ediciones');
+  }
+
+  function renderWinners() {
+    if (!winnersGrid) return;
+    winnersGrid.innerHTML = '';
+    winners.forEach(w => {
+      const card = document.createElement('div');
+      card.className = 'winner-card';
+      card.innerHTML = `
+        <div class="winner-category">${w.category} · ${w.year}</div>
+        <div class="winner-project">${w.project}</div>
+        <div class="winner-author">${w.author}</div>
+        <div class="winner-year"><span class="badge">🏅 Ganador</span> ${w.description.substring(0, 80)}${w.description.length > 80 ? '…' : ''}</div>
+      `;
+      winnersGrid.appendChild(card);
+    });
+    document.getElementById('count-winners') && (document.getElementById('count-winners').innerText = winners.length + ' proyectos');
+  }
+
+  renderEditions();
+  renderWinners();
+
+  // Nota: si quieres añadir más ediciones o ganadores, solo agrega objetos a los arrays "ediciones" y "winners".
+  // Para imágenes de Google Drive, sustituye "imageUrl" por el enlace directo como se explica.
+</script>
+</body>
+</html>
